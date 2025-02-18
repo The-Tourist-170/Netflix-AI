@@ -1,9 +1,53 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Header from './Header'
+import { checkValidateData } from '../utils/Validate'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../utils/firebase';
 
 const Login = () => {
 
     const [isSignInForm, setIsSignInForm] = useState(true)
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    const email = useRef(null);
+    const password = useRef(null);
+
+    const handleBtnClick = () => {
+        const message = checkValidateData(email.current.value, password.current.value);
+        setErrorMessage(message);
+
+        if(message) return;
+        
+        if(!isSignInForm){
+            createUserWithEmailAndPassword(
+                        auth, 
+                        email.current.value, 
+                        password.current.value)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorCode + " " + errorMessage);
+            });
+        }else{
+            signInWithEmailAndPassword(
+                auth, 
+                email.current.value, 
+                password.current.value)
+            .then((userCredential) => {
+            const user = userCredential.user;
+        })
+        .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorCode + " " + errorMessage);
+  });
+        }
+
+    }
 
     const handleToggleForm = () => {
         setIsSignInForm(!isSignInForm);
@@ -17,20 +61,38 @@ const Login = () => {
                 src="https://assets.nflxext.com/ffe/siteui/vlv3/f268d374-734d-474f-ad13-af5ba87ef9fc/web/IN-en-20250210-TRIFECTA-perspective_92338d5d-6ccd-4b1a-8536-eb2b0240a55e_large.jpg" 
                 alt="background" />
         </div>
-        <form className='w-3/12 absolute p-12 bg-black/70 text-amber-50 my-36 mx-auto right-0 left-0 rounded-lg'>
+        <form className='
+                        w-3/12 absolute p-12 
+                        bg-black/70 text-amber-50 
+                        my-36 mx-auto right-0 left-0 rounded-lg'
+              onSubmit={(e) => e.preventDefault()}>
+            
             <h1 className='font-bold text-3xl py-4'>
                 {isSignInForm ? "Sign In" : "Register"}
             </h1>
 
             {!isSignInForm && (
-                <input type='text' placeholder='Full Name' className='p-2 my-4 w-full bg-gray-900'/>
+                <input 
+                    type='text' 
+                    placeholder='Full Name' 
+                    className='p-2 my-4 w-full bg-gray-900'/>
             )}
 
-            <input type='text' placeholder='Email Address' className='p-2 my-4 w-full bg-gray-900'/>
+            <input 
+                ref={email}
+                type='text' 
+                placeholder='Email Address' 
+                className='p-2 my-4 w-full bg-gray-900'/>
             
-            <input type='password' placeholder='Password' className='p-2 my-4 w-full bg-gray-900'/>
+            <input 
+                ref={password}
+                type='password' 
+                placeholder='Password' 
+                className='p-2 my-4 w-full bg-gray-900'/>
             
-            <button className='p-4 myfalse-6 bg-red-700 w-full rounded-lg'>
+            <p className='text-red-700 text-lg font-bold py-1.5'>{errorMessage}</p>
+            
+            <button className='p-4 myfalse-6 bg-red-700 w-full rounded-lg' onClick={handleBtnClick}>
                 {isSignInForm ? "Sign In" : "Create Account"}
             </button>
             
