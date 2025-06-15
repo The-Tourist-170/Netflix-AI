@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { use, useEffect } from 'react'
 import Header from './Header'
-import { api_options, nowPlayingUrl } from '../utils/constants'
+import useNowPlayingMovies from '../hooks/useNowPlayingMovies'
+import MainCont from './MainCont'
+import SecCont from './SecCont'
 
 const Browse = () => {
   
-  const getNowPlayingMovies = async () => {
-    const data = await fetch(nowPlayingUrl, api_options);
-    const json = await data.json();
-    console.log(json);
-  };
-
-  useEffect(() => {
-    getNowPlayingMovies();
-  }, []);
+  useNowPlayingMovies();  
   
   return (
     <div>
       <Header/>
+      <MainCont/>
+      <SecCont/>
     </div>
   )
 }
