@@ -1,9 +1,15 @@
 import React from 'react';
+import MovieList from './MovieList';
+import { useSelector } from 'react-redux';
 
 const SecCont = () => {
+
+    // const movies = useSelector((store) => {store.movies}console.log);
+    const movies = useSelector((store) => store.movies);
+
     return (
         <div className="sec-container">
-            <h1>Welcome to the Sec Container</h1>
+            <MovieList title={"Now Playing"} movies={movies.nowPlayingMovies}/>
         </div>
     );
 };
