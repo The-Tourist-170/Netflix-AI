@@ -10,28 +10,22 @@
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0,0,0,0.7) #fff; /* thumb, track */
+  scrollbar-color: #3c3939 #000000; /* thumb color, track color */
 }
 
 /* Chrome, Edge, Safari */
 .custom-scrollbar::-webkit-scrollbar {
-  height: 16px;
-  background: #fff;
-  border-radius: 8px;
+  width: 8px;
+  height: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.7);
-  border-radius: 50%;
-  min-width: 16px;
-  min-height: 16px;
-  box-shadow: 0 0 16px 8px rgba(0,0,0,0.3);
-  backdrop-filter: blur(4px);
-  /* For Safari */
-  -webkit-backdrop-filter: blur(4px);
-  border: 4px solid #fff;
+  background: #ff0000; /* Red thumb */
+  border-radius: 8px;
+  backdrop-filter: blur(2px);
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(0,0,0,0.85);
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #000000; /* Black track */
+  border-radius: 8px;
 }

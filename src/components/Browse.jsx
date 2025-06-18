@@ -23,12 +23,11 @@ const Browse = () => {
   return (
     <div>
       <Header/>
-      {/* {menuView ? <LogOut/> : } */}
-      {searchView ? <Search/> : 
-                    menuView ? <LogOut/> : <div className='bg-black'>
-                                              <MainCont/>
-                                              <SecCont/>
-                                           </div>
+      {menuView && <LogOut/>}
+      {searchView ? <Search/> : <div className='bg-black overflow-y-scroll custom-scrollbar h-screen'>
+                                  <MainCont/>
+                                  <SecCont/>
+                                </div>
       }
     </div>
   );

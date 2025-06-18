@@ -13,14 +13,14 @@ const Header = () => {
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
   const searchView = useSelector(store => store.search.searchView);
-  
+  const searchBtn = useSelector(store => store.menu.searchBtn);
 
-  const handleSignOut = () => {
-    signOut(auth).then(() => {
-    }).catch((error) => {
-      navigate('/error');
-    });
-  };
+  // const handleSignOut = () => {
+    // signOut(auth).then(() => {
+    // }).catch((error) => {
+      // navigate('/error');
+    // });
+  // };
 
   const handleSearch = () => {
     dispatch(toggleSearchView());
@@ -55,13 +55,13 @@ const Header = () => {
             <img className='w-44' src={logo} alt="logo" />
             {user && 
           <div className='flex items-center justify-between'>
-            <button className='self-center h-[100%] text-white px-3 backdrop-blur-3xl hover:bg-red-700 border-2 rounded-3xl mx-8' onClick={handleSearch}>
+            {searchBtn && <button className='self-center h-[100%] text-white px-3 backdrop-blur-3xl hover:bg-red-700 border-2 rounded-3xl mx-8' onClick={handleSearch}>
               {!searchView ? 'Search' : 'Browse'}
-            </button>
+            </button>}
             <div className='relative flex flex-col items-center'>
-              <button onClick={handleSignOut} className='px-2 font-bold text-white hover:border-red-700'>
+              {searchBtn && <button onClick={handleMenu} className='px-2 font-bold text-white hover:border-red-700'>
                 <img src={user.photoURL} alt="usericon" className='w-12 h-12' />
-              </button>
+              </button>}
             </div>
           </div>}
         </div>

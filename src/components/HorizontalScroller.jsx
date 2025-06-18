@@ -19,7 +19,7 @@ export default function HorizontalScroller({ children }) {
       {/* Left Arrow */}
       <button
         className="absolute left-0 top-1/2 -translate-y-1/2 z-10
-                   bg-black/60 backdrop-blur-3xl text-white font-bold text-3xl
+                   bg-black/60 backdrop-blur-3xl text-red-800 font-bold text-3xl
                    p-3 rounded-full hover:bg-black/80 opacity-0 group-hover:opacity-100
                    transition shadow-lg"
         onClick={() => scroll("left")}
@@ -38,7 +38,7 @@ export default function HorizontalScroller({ children }) {
       {/* Right Arrow */}
       <button
         className="absolute right-0 top-1/2 -translate-y-1/2 z-10
-                   bg-black/60 backdrop-blur-md text-white font-bold text-3xl
+                   bg-black/60 backdrop-blur-md text-red-800 font-bold text-3xl
                    p-3 rounded-full hover:bg-black/80 opacity-0 group-hover:opacity-100
                    transition shadow-lg"
         onClick={() => scroll("right")}
