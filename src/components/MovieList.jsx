@@ -2,11 +2,11 @@ import React from 'react';
 import MovieCard from './MovieCard';
 import HorizontalScroller from './HorizontalScroller';
 
-const MovieList = ({ title, movies }) => {
+const MovieList = ({ title, movies, bgblur=true, scr=true }) => {
   return (
-    <div className='px-6 backdrop-blur-sm'>
+    <div className={` px-6 ${ bgblur ? ' backdrop-blur-sm' : ''}`}>
       <h1 className='text-2xl font-bold font-serif py-3 text-white'>{title}</h1>
-      <HorizontalScroller>
+      <HorizontalScroller scr={scr}>
         {movies.map((movie) => {
           if (!movie?.poster_path) return null;
           return (

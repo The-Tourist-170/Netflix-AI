@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 
-export default function HorizontalScroller({ children }) {
+export default function HorizontalScroller({ children, scr=true }) {
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
@@ -17,7 +17,7 @@ export default function HorizontalScroller({ children }) {
   return (
     <div className="relative group">
       {/* Left Arrow */}
-      <button
+      {scr && <button
         className="absolute left-0 top-1/2 -translate-y-1/2 z-10
                    bg-black/60 backdrop-blur-3xl text-red-800 font-bold text-3xl
                    p-3 rounded-full hover:bg-black/80 opacity-0 group-hover:opacity-100
@@ -26,7 +26,7 @@ export default function HorizontalScroller({ children }) {
         aria-label="Scroll Left"
       >
         &#8592;
-      </button>
+      </button>}
       {/* Scrollable List */}
       <div
         ref={scrollRef}
@@ -36,7 +36,7 @@ export default function HorizontalScroller({ children }) {
         {children}
       </div>
       {/* Right Arrow */}
-      <button
+      {scr && <button
         className="absolute right-0 top-1/2 -translate-y-1/2 z-10
                    bg-black/60 backdrop-blur-md text-red-800 font-bold text-3xl
                    p-3 rounded-full hover:bg-black/80 opacity-0 group-hover:opacity-100
@@ -45,7 +45,7 @@ export default function HorizontalScroller({ children }) {
         aria-label="Scroll Right"
       >
         &#8594;
-      </button>
+      </button>}
     </div>
   );
 }

@@ -3,13 +3,15 @@ import userReducer from "./userSlice";
 import moviesReducer from "./moviesSlice";
 import searchReducer from "./searchSlice";
 import menuReducer from "./menuSlice";
+import geminiReducer from "./geminiSlice"
 
 const appStore = configureStore({
     reducer: {
         user: userReducer,
         movies: moviesReducer,
         search: searchReducer,
-        menu: menuReducer
+        menu: menuReducer,
+        gemini: geminiReducer
     }
 });
 

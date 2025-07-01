@@ -15,13 +15,6 @@ const Header = () => {
   const searchView = useSelector(store => store.search.searchView);
   const searchBtn = useSelector(store => store.menu.searchBtn);
 
-  // const handleSignOut = () => {
-    // signOut(auth).then(() => {
-    // }).catch((error) => {
-      // navigate('/error');
-    // });
-  // };
-
   const handleSearch = () => {
     dispatch(toggleSearchView());
   };

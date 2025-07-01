@@ -1,19 +1,37 @@
 import React, { useRef } from 'react';
 import ai from '../utils/gemini';
+import { api_options } from '../utils/constants';
+import { useDispatch } from 'react-redux';
+import { addGeminiMovies } from "../utils/geminiSlice";
 
 const SearchBar = () => {
     const inputText = useRef(null);
-    // console.log(inputText.current.value);
+    const dispatch = useDispatch();
+
+    const searchMovieTMDB = async (movie) => {
+        const movSearchUrl = 'https://api.themoviedb.org/3/search/movie?query='+ movie +
+        '&include_adult=false&language=en-US&page=1';
+        const data = await fetch(movSearchUrl, api_options);
+
+        return await data.json();
+    };
 
     const handleSearchProcess = async () => {
-        const queryText = "Act as a movie recommendation system, and suggest some movies for the query: " + inputText.current?.value + ". Only give names of 5 movies (filter only bollywood or hollywood movies if mentioned else give movies from around the globe but always give 1 bollywood movies, until not asked to give a specific country based movie), comma seprated, like the example result given ahead. Example Result: War, The Batman, Dr Strange, Nosferatu, Django Unchained. Also Don't explicitly mention bollywood or hollywood.";
+        const queryText = "Act as a movie recommendation system, and suggest 5 movies for the query: " + inputText.current?.value + ". Only give 5 movies , comma seprated, like the example result given ahead. Example Result: War, The Batman, Dr Strange, Nosferatu, Django Unchained. Also Don't explicitly mention bollywood or hollywood.";
         const response = await ai.models.generateContent({
             model: "gemini-2.0-flash",
             contents: queryText,
-        });
-        console.log(inputText.current.value);
-        console.log(queryText);
-        console.log(response.text);
+        });        
+
+        if(!response){
+            console.error("Error: No response from Gemini AI model.");
+            return;
+        }
+
+        const result = response?.text.split(",");
+        const promiseArray = result.map((movie) => searchMovieTMDB(movie));
+        const tmdbData = await Promise.all(promiseArray);
+        dispatch(addGeminiMovies({movieNames: result, movieResults: tmdbData}));        
     };
 
     return (

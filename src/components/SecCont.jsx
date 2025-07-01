@@ -6,13 +6,9 @@ const SecCont = () => {
   const movies = useSelector((store) => store.movies);
 
   const nowPlaying = movies?.nowPlayingMovies;
-    // console.log('Now Playing Movies:', nowPlaying);
   const popularMovies = movies?.popularMovies;
-    // console.log('Popular Movies:', popularMovies);
   const topRatedMovies = movies?.topRatedMovies;
-    // console.log('Top Rated Movies:', topRatedMovies);
   const upcomingMovies = movies?.upcomingMovies;
-    // console.log('Upcoming Movies:', upcomingMovies);
   
   if (!Array.isArray(nowPlaying) || nowPlaying.length === 0) {
     return <div>Loading now playing movies...</div>;
