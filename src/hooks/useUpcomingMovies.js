@@ -6,7 +6,7 @@ import { addUpcomingMovies } from "../utils/moviesSlice";
 const useUpcomingMovies = () => {
     const dispatch = useDispatch();
 
-    const upcomingMovies = useSelector(store => store.upcomingMovies);
+    const upcomingMovies = useSelector(store => store.movies.upcomingMovies);
 
     const getUpcomingMovies = async () => {
         const data = await fetch(upcomingUrl, api_options);

@@ -6,7 +6,7 @@ import { addTopRatedMovies } from "../utils/moviesSlice";
 const useTopRatedMovies = () => {
     const dispatch = useDispatch();
 
-    const topRatedMovies = useSelector(store => store.topRatedMovies);
+    const topRatedMovies = useSelector(store => store.movies.topRatedMovies);
 
     const getTopRatedMovies = async () => {
         const data = await fetch(topRatedUrl, api_options);

@@ -6,7 +6,7 @@ import { addPopularMovies } from "../utils/moviesSlice";
 const usePopularMovies = () => {
     const dispatch = useDispatch();
 
-    const popularMovies = useSelector(store => store.popularMovies);
+    const popularMovies = useSelector(store => store.movies.popularMovies);
 
     const getPopularMovies = async () => {
         const data = await fetch(popularUrl, api_options);

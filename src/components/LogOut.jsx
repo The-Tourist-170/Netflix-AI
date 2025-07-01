@@ -21,7 +21,7 @@ const LogOut = () => {
     return (
         <div className="overflow-y-scroll hide-scrollbar fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center"
              style={{ backgroundImage: "url('/src/assets/logout_bg.jpg')" }}>
-          <div className="absolute inset-0 backdrop-blur-lg bg-black/30">/</div>
+          <div className="absolute inset-0 backdrop-blur-lg bg-black/30"></div>
           <div className="relative z-10 flex flex-col items-center justify-center p-8 bg-gradient-to-r rounded-xl">
             <span className="text-xl text-white font-mono font-bold">Are you sure, you want to log out?</span>
             <div className='p-4'>
