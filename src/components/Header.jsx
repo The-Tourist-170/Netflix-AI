@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../utils/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import { addUser, removeUser } from '../utils/userSlice';
 import { logo } from '../utils/constants';
 import { toggleSearchView } from '../utils/searchSlice';
 import { toggleMenuView } from '../utils/menuSlice';
+import { clearGeminiSlice } from '../utils/geminiSlice';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ const Header = () => {
   const handleSearch = () => {
     dispatch(toggleSearchView());
   };
+
+  if(!searchView) dispatch(clearGeminiSlice());
 
   const handleMenu = () => {
     dispatch(toggleMenuView());
@@ -44,7 +47,7 @@ const Header = () => {
 
   return (
     <>
-        <div className='absolute z-10 w-full px-8 py-6 bg-gradient-to-b from-black flex justify-between'>
+        <div className='absolute z-41 w-full px-8 py-6 bg-gradient-to-b from-black flex justify-between'>
             <img className='w-44' src={logo} alt="logo" />
             {user && 
           <div className='flex items-center justify-between'>
@@ -52,8 +55,8 @@ const Header = () => {
               {!searchView ? 'Search' : 'Browse'}
             </button>}
             <div className='relative flex flex-col items-center'>
-              {searchBtn && <button onClick={handleMenu} className='px-2 font-bold text-white hover:border-red-700'>
-                <img src={user.photoURL} alt="usericon" className='w-12 h-12' />
+              {searchBtn && <button onClick={handleMenu} className='px-2 font-bold text-white hover:shadow-sm'>
+                <img src={user.photoURL} alt="usericon" className='w-12 h-12 hover:border-red-600 hover:border-1' />
               </button>}
             </div>
           </div>}

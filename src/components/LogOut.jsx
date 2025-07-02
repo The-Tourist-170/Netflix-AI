@@ -1,8 +1,9 @@
 import React from 'react';
 import { signOut } from "firebase/auth";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleMenuView } from '../utils/menuSlice';
 import { auth } from '../utils/firebase';
+
 
 const LogOut = () => {
     const dispatch = useDispatch();
@@ -10,8 +11,14 @@ const LogOut = () => {
     const handleMenu = () => {
         dispatch(toggleMenuView());
     };
-    
+
+    const menu = useSelector(store => store.menu.menuView);
+    console.log("LogPage1: ", menu);
+
     const handleSignOut = () => {
+        dispatch(toggleMenuView());
+        console.log("LogPage2: ", menu);
+
         signOut(auth).then(() => {
             }).catch((error) => {
                 navigate('/error');
@@ -19,6 +26,7 @@ const LogOut = () => {
     };
 
     return (
+      <>
         <div className="overflow-y-scroll hide-scrollbar fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center"
              style={{ backgroundImage: "url('/src/assets/logout_bg.jpg')" }}>
           <div className="absolute inset-0 backdrop-blur-lg bg-black/30"></div>
@@ -30,6 +38,7 @@ const LogOut = () => {
             </div>
           </div>
         </div>
+      </>
     )
 };
 

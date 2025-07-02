@@ -3,17 +3,16 @@ import Header from './Header'
 import { checkValidateData } from '../utils/Validate'
 import { updateProfile, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../utils/firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { userAvatar } from '../utils/constants';
-import { bgUrl } from '../utils/constants';
+import { bgUrl, userAvatar } from '../utils/constants';
 
 const Login = () => {
 
     const dispatch = useDispatch();
-
     const [isSignInForm, setIsSignInForm] = useState(true)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [loading, setLoading] = useState(false);
 
     const name = useRef(null);
     const email = useRef(null);
@@ -24,6 +23,8 @@ const Login = () => {
         setErrorMessage(message);
 
         if(message) return;
+
+        setLoading(true);
         
         if(!isSignInForm){
             createUserWithEmailAndPassword(
@@ -45,29 +46,31 @@ const Login = () => {
                 }).catch((error) => {
                     setErrorMessage(error.message);
                 });
+                setLoading(false);
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 setErrorMessage(errorCode + " " + errorMessage);
+                setLoading(false);
             });
         }else{
             signInWithEmailAndPassword(
                 auth, 
                 email.current.value, 
                 password.current.value)
-            .then((userCredential) => {
-            const user = userCredential.user;
-        })
-        .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setErrorMessage(errorCode + " " + errorMessage);
-  });
+.then((userCredential) => {
+    const user = userCredential.user;
+    setLoading(false);
+})
+.catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorCode + " " + errorMessage);
+    setLoading(false);
+});
         }
-
     }
-
     const handleToggleForm = () => {
         setIsSignInForm(!isSignInForm);
     }
@@ -102,25 +105,33 @@ const Login = () => {
                 ref={email}
                 type='text' 
                 placeholder='Email Address' 
-                className='p-2 my-4 w-full bg-gray-900'/>
+                className='p-2 my-4 w-full outline-0 bg-gray-900 hover:border-2 hover:border-red-700 focus:border-red-700 focus:border-2'/>
             
             <input 
                 ref={password}
                 type='password' 
                 placeholder='Password' 
-                className='p-2 my-4 w-full bg-gray-900'/>
+                className='p-2 my-4 w-full bg-gray-900 outline-0 hover:border-2 hover:border-red-700 focus:border-red-700 focus:border-2'/>
             
             <p className='text-red-700 text-lg font-bold py-1.5'>{errorMessage}</p>
             
-            <button className='p-4 bg-red-700 w-full rounded-lg' onClick={handleBtnClick}>
-                {isSignInForm ? "Sign In" : "Create Account"}
+            <button
+                className='p-2 bg-red-700 w-full rounded-lg text-xl font-semibold hover:bg-black/80 hover:text-red-700 hover:font-semibold flex items-center justify-center'
+                        onClick={handleBtnClick}
+                        disabled={loading} >
+                {loading ? (
+                    <svg className="animate-spin h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                ) : (
+                    isSignInForm ? "Sign In" : "Create Account"
+                )}
             </button>
-            
-            <p className='py-4 cursor-pointer' onClick={handleToggleForm}>
+            <p className='py-4 cursor-pointer hover:text-red-500' onClick={handleToggleForm}>
                 {isSignInForm ? "New to Netflix? Register Now" : "Already a member? Sign In Now"}
             </p>
         </form>
-
     </>
   )
 }

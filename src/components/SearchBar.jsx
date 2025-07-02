@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import ai from '../utils/gemini';
 import { api_options } from '../utils/constants';
 import { useDispatch } from 'react-redux';
-import { addGeminiMovies } from "../utils/geminiSlice";
+import { addGeminiMovies, setGeminiLoading } from "../utils/geminiSlice";
 
 const SearchBar = () => {
     const inputText = useRef(null);
@@ -17,6 +17,7 @@ const SearchBar = () => {
     };
 
     const handleSearchProcess = async () => {
+        dispatch(setGeminiLoading(true));
         const queryText = "Act as a movie recommendation system, and suggest 5 movies for the query: " + inputText.current?.value + ". Only give 5 movies , comma seprated, like the example result given ahead. Example Result: War, The Batman, Dr Strange, Nosferatu, Django Unchained. Also Don't explicitly mention bollywood or hollywood.";
         const response = await ai.models.generateContent({
             model: "gemini-2.0-flash",
@@ -31,7 +32,8 @@ const SearchBar = () => {
         const result = response?.text.split(",");
         const promiseArray = result.map((movie) => searchMovieTMDB(movie));
         const tmdbData = await Promise.all(promiseArray);
-        dispatch(addGeminiMovies({movieNames: result, movieResults: tmdbData}));        
+        dispatch(addGeminiMovies({movieNames: result, movieResults: tmdbData}));   
+        dispatch(setGeminiLoading(false));
     };
 
     return (
