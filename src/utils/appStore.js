@@ -4,7 +4,6 @@ import moviesReducer from "./moviesSlice";
 import searchReducer from "./searchSlice";
 import menuReducer from "./menuSlice";
 import geminiReducer from "./geminiSlice"
-import muteReducer from "./muteSlice"
 
 const appStore = configureStore({
     reducer: {
@@ -12,8 +11,7 @@ const appStore = configureStore({
         movies: moviesReducer,
         search: searchReducer,
         menu: menuReducer,
-        gemini: geminiReducer,
-        mute: muteReducer
+        gemini: geminiReducer
     }
 });
 

@@ -24,6 +24,7 @@ const Header = () => {
 
   const handleMenu = () => {
     dispatch(toggleMenuView());
+    if(searchView) dispatch(toggleSearchView);
   };
 
   useEffect(() => {

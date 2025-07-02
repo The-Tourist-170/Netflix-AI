@@ -3,6 +3,7 @@ import ai from '../utils/gemini';
 import { api_options } from '../utils/constants';
 import { useDispatch } from 'react-redux';
 import { addGeminiMovies, setGeminiLoading } from "../utils/geminiSlice";
+import searchIcon from "../assets/search_icon.png";
 
 const SearchBar = () => {
     const inputText = useRef(null);
@@ -49,7 +50,7 @@ const SearchBar = () => {
                         hover:bg-red-900 border-3 text-white 
                         rounded-4xl font-semibold'
                         onClick={handleSearchProcess}>
-                    <img src="src/assets/search_icon.png" alt="Search" className='p-2 w-10'/>
+                    <img src={searchIcon} alt="Search" className='p-2 w-10'/>
                 </button>
             </form>
         </div>

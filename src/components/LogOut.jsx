@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleMenuView } from '../utils/menuSlice';
 import { auth } from '../utils/firebase';
-
+import { toggleSearchView } from '../utils/searchSlice';
 
 const LogOut = () => {
     const dispatch = useDispatch();
@@ -12,12 +12,13 @@ const LogOut = () => {
         dispatch(toggleMenuView());
     };
 
+    const searchView = useSelector(store => store.search.searchView);
+
     const menu = useSelector(store => store.menu.menuView);
-    console.log("LogPage1: ", menu);
 
     const handleSignOut = () => {
         dispatch(toggleMenuView());
-        console.log("LogPage2: ", menu);
+        if(searchView) dispatch(toggleSearchView());
 
         signOut(auth).then(() => {
             }).catch((error) => {
@@ -27,8 +28,7 @@ const LogOut = () => {
 
     return (
       <>
-        <div className="overflow-y-scroll hide-scrollbar fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center"
-             style={{ backgroundImage: "url('/src/assets/logout_bg.jpg')" }}>
+        <div className="overflow-y-scroll hide-scrollbar fixed inset-0 z-50 flex items-center justify-center bg-cover bg-center">
           <div className="absolute inset-0 backdrop-blur-lg bg-black/30"></div>
           <div className="relative z-10 flex flex-col items-center justify-center p-8 bg-gradient-to-r rounded-xl">
             <span className="text-xl text-white font-mono font-bold">Are you sure, you want to log out?</span>
