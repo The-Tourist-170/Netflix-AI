@@ -101,6 +101,12 @@ A modern, interactive Netflix-style clone powered by **Gemini AI** featuring sle
 
 ---
 
+## 📄 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
 ## ✅ Contribution & Feedback
 
 Feel free to:
