@@ -97,7 +97,7 @@ A modern, interactive Netflix-style clone powered by **Gemini AI** featuring sle
 
 ## 🔍 Deployed Link
 
-- [https://netflix-ai-3821.web.app/](https://netflix-ai-3821.web.app/)
+- [Netflix AI](https://netflix-ai-214392.web.app/)
 
 ---
 
